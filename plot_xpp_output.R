@@ -1,11 +1,11 @@
-#Goal of this script: time series visualization of xppaut data (orbit diagrams)
+#Goal of this script: creates a visualization of xppaut data (orbit diagram)
 #Packages needed
 library(dplyr)
 library(ggplot2)
 
 #Load the datasets
-df1 <- read.table("tau2=10_firsthalf.dat")
-df2 <- read.table("tau2=10_secondhalf.dat") %>% distinct(V6, .keep_all = TRUE) #It is the case that the "second half" of the dataset, which is obtained without the Poincaré section, 
+df1 <- read.table("input_data/tau2=10_firsthalf.dat")
+df2 <- read.table("input_data/tau2=10_secondhalf.dat") %>% distinct(V6, .keep_all = TRUE) #It is the case that the "second half" of the dataset, which is obtained without the Poincaré section, 
 #has a lot of useless data in it, so it's the files with "second half" in the name that ought to be cleaned up
 
 #Function to perform data cleaning
@@ -22,7 +22,7 @@ clean_xpp_data <- function(df1, df2) {
     )
   
   #Save cleaned dataset
-  write.table(df, file = "testingdata.dat", append = FALSE, row.names = FALSE, col.names = TRUE, quote = FALSE, sep = " ")
+  write.table(df, file = "output_files/testingdata.dat", append = FALSE, row.names = FALSE, col.names = TRUE, quote = FALSE, sep = " ")
   
   return(df)
 }
@@ -50,7 +50,7 @@ myplot <- ggplot(df, aes(x = tau1, y = predator)) +
 
 #Save plot to output directory
 ggsave(
-  filename = "orbit_diagram_tau2_10.png",
+  filename = "output_files/orbit_diagram_tau2_10.png",
   plot = myplot,
   width = 7,
   height = 5,
